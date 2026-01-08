@@ -26,6 +26,10 @@ function applyOp(v1, v2, op) {
 }
 let b=0;
 function calculate() {
+    if (currentNum !== "") {
+        stack.push(currentNum);
+        currentNum = "";
+    }
     while (oper.length > 0) {
         let op = oper.pop();
         let val2 = stack.pop();
