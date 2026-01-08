@@ -37,3 +37,6 @@ Open index.html in any browser.
 Start casting numbers!
 
 ***Warning: Attempting to divide by zero may result in a "Muggle Error" and a loss of 10 points for your House!***
+
+<img width="1897" height="797" alt="Screenshot 2026-01-08 190904" src="https://github.com/user-attachments/assets/7c115e45-49c3-4cfe-8b3c-df33daccc1ca" />
+
