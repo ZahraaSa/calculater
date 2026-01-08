@@ -4,6 +4,8 @@ const myButton = document.querySelector(".buttons");
 let stack=[];
 let oper=[];
 let curnum="";
+let b=0;
+let isoper=0;
 const precedence = {
     '+': 1,
     '-': 1,
@@ -24,11 +26,11 @@ function applyOp(v1, v2, op) {
         case '^': return Math.pow(v1, v2);
     }
 }
-let b=0;
 function calculate() {
-    if (currentNum !== "") {
-        stack.push(currentNum);
-        currentNum = "";
+
+    if (curnum !== "") {
+        stack.push(curnum);
+        
     }
     while (oper.length > 0) {
         let op = oper.pop();
@@ -52,6 +54,9 @@ myButton.addEventListener("click", function(event) {
         if (value === '=') {
             try {
             display.textContent=calculate();
+            stack=[display.textContent];
+            curnum = "";
+            b=1;
             } catch {
                 display.textContent = "Erorr";
             }
@@ -62,35 +67,52 @@ myButton.addEventListener("click", function(event) {
            stack=[];
            oper=[];
         }
+
         else if (value === "<-") {
-             stack.pop();
-             if (stack.length===0)
-             display.textContent ="0";
-            else
-             display.textContent =stack.at(-1);
+        let currentText = display.textContent;
+         if (currentText.length > 1) {
+        display.textContent = currentText.slice(0, -1);
+    } else {
+        display.textContent = "0";
+    }
+             if (isoper){
+              oper.pop();
+              isoper=0;
         }
-        else {
-            if (display.textContent === "0" || display.textContent === "Erorr") {
-                display.textContent = value;
-                }
+    else {
+        if (curnum.length > 0) {
+            curnum = curnum.slice(0, -1);
+        } else if (stack.length > 0) {
+            curnum = stack.pop().toString();
+            curnum = curnum.slice(0, -1);
+        }}}
+                 
+     else if (precedence[value]) { 
+      
+        if (curnum !== "") {
+            stack.push(curnum);
+            curnum = "";
+        }
 
-            else if (value==='+'||value==="-"||value==="*"||value==="/"||value==="^"||value==="mod") {
-              if  (precedence[oper.at(-1)]<precedence.value){oper.push(value);display.textContent+= value;}
-
-                else {  display.textContent+= value;
-                    
-                    while (precedence[oper.at(-1)]>=precedence[value]){
-                        let op = oper.pop();
-                        let val2 = stack.pop();
-                        let val1 = stack.pop();
-                        let result = applyOp(val1, val2, op);
-                        stack.push(result);
-                    
-                }}}
-
-           else{
-            display.textContent+= value;
-            curnum+=value;
-
-        }}
+        while (oper.length > 0 && precedence[oper.at(-1)] >= precedence[value]) {
+            let op = oper.pop();
+            let v2 = stack.pop();
+            let v1 = stack.pop();
+            stack.push(applyOp(v1, v2, op));
+        }
+        isoper=1;
+        oper.push(value);
+        display.textContent += value;
+    }
+    else { 
+       
+        if (display.textContent === "0" || display.textContent === "Error"||b===1) {
+            display.textContent = value;
+            b=0;
+        } else {
+            display.textContent += value;
+            isoper=0;
+        }
+        curnum += value;
+    isoper=0;}
 });
