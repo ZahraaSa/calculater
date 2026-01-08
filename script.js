@@ -1,6 +1,9 @@
 
 let display = document.getElementById("display");
 const myButton = document.querySelector(".buttons");
+   const clickSound = document.getElementById("click-sound");
+    const spellSound = document.getElementById("cast-spell");
+    const bgMusic = document.getElementById("bg-music");
 let stack=[];
 let oper=[];
 let curnum="";
@@ -45,15 +48,31 @@ function calculate() {
 myButton.addEventListener("click", function(event) {
     const target = event.target;
     if (target.tagName != 'BUTTON') return;
+
+
+    if (bgMusic.paused) {
+        bgMusic.volume = 0.3; 
+        bgMusic.play();
+    }
+
     const value = target.textContent;
+if (value === '=') {
+       spellSound.currentTime = 0.5; 
+              spellSound.play();
+}
+else {
+    clickSound.currentTime = 0;
+    clickSound.play();
+}
 
     if (value === '=') {
         try {
+          
             let result = calculate();
             display.textContent = result;
-            stack = [result]; // النتيجة جاهزة للعملية التالية
+            stack = [result]; 
             curnum = "";
-            b = 1; // علامة أننا انتهينا من عملية
+            b = 1; 
         } catch {
             display.textContent = "Error";
         }
@@ -66,18 +85,16 @@ myButton.addEventListener("click", function(event) {
         let currentText = display.textContent;
         if (currentText === "0") return;
 
-        // تحديث الشاشة
+       
         if (currentText.length > 1) {
             display.textContent = currentText.slice(0, -1);
         } else {
             display.textContent = "0";
         }
 
-        // تحديث المنطق
         if (isoper) {
             oper.pop();
             isoper = 0;
-            // بعد حذف العملية، نحتاج لاستعادة الرقم الأخير من الـ stack ليكون هو الـ curnum الحالي
             if (stack.length > 0) {
                 curnum = stack.pop().toString();
             }
@@ -85,14 +102,13 @@ myButton.addEventListener("click", function(event) {
             if (curnum.length > 0) {
                 curnum = curnum.slice(0, -1);
             } else if (stack.length > 0) {
-                // إذا كان الـ curnum فارغاً، نسحب من الـ stack
                 curnum = stack.pop().toString();
                 curnum = curnum.slice(0, -1);
             }
         }
     }
     else if (precedence[value]) { 
-        if (b === 1) b = 0; // إذا ضغطت عملية بعد يساوي، أكمل الحساب على النتيجة
+        if (b === 1) b = 0;
 
         if (curnum !== "") {
             stack.push(curnum);
@@ -109,10 +125,10 @@ myButton.addEventListener("click", function(event) {
         oper.push(value);
         display.textContent += value;
     }
-    else { // ضغط رقم
+    else {
         if (display.textContent === "0" || display.textContent === "Error" || b === 1) {
             display.textContent = value;
-            if (b === 1) { stack = []; b = 0; } // تصفير الستاك لبدء عملية جديدة تماماً
+            if (b === 1) { stack = []; b = 0; } 
         } else {
             display.textContent += value;
         }

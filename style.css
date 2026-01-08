@@ -1,23 +1,27 @@
 body{
 background-color: azure;
 display: flex;
-justify-content: center;
+justify-content: flex-end;
 align-items: center;
 height: 100vh;
+overflow: hidden;
+padding-right: 100px;
 }
 .calculator {
-  background: #33024f;
   padding: 20px;
   border-radius: 10px;
   width: 260px;
+  background: rgba(51, 2, 79, 0.85);
+    backdrop-filter: blur(5px); 
+    border: 1px solid rgba(225, 171, 237, 0.3);
 }
 #display {
-  background: black;
-  color: lime;
-  padding: 15px;
-  font-size: 24px;
-  text-align: right;
-  margin-bottom: 10px;
+ background: #1a0f00; 
+    color: #eeba30; 
+    text-shadow: 0 0 10px rgba(238, 186, 48, 0.7); /* توهج للأرقام */
+    border-radius: 5px;
+    height: 50px;
+    border: 2px inset #000000;
 }
 
 .buttons {
@@ -27,17 +31,47 @@ height: 100vh;
 }
 
 .buttons button {
-  background: rgb(154, 136, 158);
-  color : rgb(24, 2, 2);
+
   width: 66px;
   height: 55px;
   font-size: 18px;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
+  background: #b1905a; /* لون نحاسي فيكتوري */
+    color: #1a0f00; /* كتابة بنية داكنة جداً */
+    font-family: 'Cinzel', serif; /* خط يوحي بالعصور الوسطى إذا توفر */
+    font-weight: bold;
+    border: 1px solid #7d633a;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 8px rgba(0,0,0,0.4);
+    transition: all 0.2s;
+}
+.buttons button:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 4px 10px rgba(0,0,0,0.5);
+    filter: brightness(0.8);
+}
+.buttons button:hover {
+    filter: brightness(1.2);
+    box-shadow: 0 0 15px rgba(177, 144, 90, 0.4);
+    cursor: url('wand-cursor.png'), auto; 
 }
 #equal{
 grid-column: span 2;
 width: 100%;
- background: rgb(225, 171, 237);
+ background: rgb(255, 217, 0);
+}
+.background-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* يضعها خلف العناصر */
+    overflow: hidden;
+}
+
+#bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* يضمن تغطية الشاشة بالكامل دون تشويه */
+    filter: brightness(0.5) contrast(1.1); /* تعتيم الصورة لإبراز الآلة الحاسبة */
 }
