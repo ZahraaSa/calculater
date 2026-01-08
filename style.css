@@ -36,9 +36,9 @@ padding-right: 100px;
   height: 55px;
   font-size: 18px;
   cursor: pointer;
-  background: #b1905a; /* لون نحاسي فيكتوري */
-    color: #1a0f00; /* كتابة بنية داكنة جداً */
-    font-family: 'Cinzel', serif; /* خط يوحي بالعصور الوسطى إذا توفر */
+  background: #b1905a; 
+    color: #1a0f00;
+    font-family: 'Cinzel', serif; 
     font-weight: bold;
     border: 1px solid #7d633a;
     box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 8px rgba(0,0,0,0.4);
@@ -65,13 +65,13 @@ width: 100%;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* يضعها خلف العناصر */
+    z-index: -1; 
     overflow: hidden;
 }
 
 #bg-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* يضمن تغطية الشاشة بالكامل دون تشويه */
-    filter: brightness(0.5) contrast(1.1); /* تعتيم الصورة لإبراز الآلة الحاسبة */
+    object-fit: cover; 
+    filter: brightness(0.5) contrast(1.1); 
 }
